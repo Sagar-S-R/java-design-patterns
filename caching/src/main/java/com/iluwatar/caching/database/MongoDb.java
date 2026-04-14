@@ -45,24 +45,29 @@ import org.bson.Document;
 public class MongoDb implements DbManager {
   private static final String DATABASE_NAME = "admin";
   private static final String MONGO_USER = getEnvOrDefault("MONGO_USER", "root");
-  private static final String MONGO_PASSWORD = getEnvOrDefault("MONGO_PASSWORD", "rootpassword");
+  private static final String MONGO_PASSWORD = getRequiredEnv("MONGO_PASSWORD");
   private MongoClient client;
   private MongoDatabase db;
 
-  /**
-   * Helper method to get environment variable with fallback. In production, MONGO_PASSWORD MUST be
-   * set as environment variable.
-   */
+  /** Helper method to get environment variable with fallback for non-secret values. */
   private static String getEnvOrDefault(String key, String defaultValue) {
     String value = System.getenv(key);
     if (value == null || value.isEmpty()) {
-      LOGGER.warn(
-          "Environment variable {} not set. Using default (NOT RECOMMENDED FOR PRODUCTION)", key);
+      LOGGER.warn("Environment variable {} not set. Using default value {}", key, defaultValue);
       return defaultValue;
     }
     return value;
   }
 
+  /** Helper method to get required environment variables for secrets. */
+  private static String getRequiredEnv(String key) {
+    String value = System.getenv(key);
+    if (value == null || value.isEmpty()) {
+      throw new IllegalStateException(
+          String.format("Required environment variable %s is not set or empty", key));
+    }
+    return value;
+  }
   void setDb(MongoDatabase db) {
     this.db = db;
   }
