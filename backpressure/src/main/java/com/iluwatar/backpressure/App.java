@@ -60,17 +60,15 @@ public class App {
      * - Process 5 items and request for the next 5 items
      */
     Subscriber sub = new Subscriber();
+    latch = new CountDownLatch(1);
     // slow publisher emit 15 numbers with a delay of 200 milliseconds
     Publisher.publish(1, 17, 200).subscribe(sub);
-
-    latch = new CountDownLatch(1);
     latch.await();
 
     sub = new Subscriber();
+    latch = new CountDownLatch(1);
     // fast publisher emit 15 numbers with a delay of 1 millisecond
     Publisher.publish(1, 17, 1).subscribe(sub);
-
-    latch = new CountDownLatch(1);
     latch.await();
   }
 }
