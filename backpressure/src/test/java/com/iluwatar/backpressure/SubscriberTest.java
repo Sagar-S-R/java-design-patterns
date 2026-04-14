@@ -38,9 +38,8 @@ public class SubscriberTest {
   public void testSubscribe() throws InterruptedException {
 
     Subscriber sub = new Subscriber();
-    Publisher.publish(1, 8, 100).subscribe(sub);
-
     App.latch = new CountDownLatch(1);
+    Publisher.publish(1, 8, 100).subscribe(sub);
     App.latch.await();
 
     String result = String.join(",", loggerExtension.getFormattedMessages());
