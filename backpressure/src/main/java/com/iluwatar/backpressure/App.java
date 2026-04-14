@@ -55,7 +55,7 @@ public class App {
 
     /*
      * This custom subscriber applies backpressure:
-     * - Has a processing delay of 0.5 milliseconds
+     * - Has a processing delay of 500 milliseconds
      * - Requests 10 items initially
      * - Process 5 items and request for the next 5 items
      */
