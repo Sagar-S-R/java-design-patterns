@@ -48,6 +48,14 @@ public record Hero(
 
     var sb = new StringBuilder();
     sb.append("This is a ").append(profession).append(" named ").append(name);
+    appendHairDescription(sb);
+    appendArmorDescription(sb);
+    appendWeaponDescription(sb);
+    sb.append('.');
+    return sb.toString();
+  }
+
+  private void appendHairDescription(StringBuilder sb) {
     if (hairColor != null || hairType != null) {
       sb.append(" with ");
       if (hairColor != null) {
@@ -58,14 +66,18 @@ public record Hero(
       }
       sb.append(hairType != HairType.BALD ? "hair" : "head");
     }
+  }
+
+  private void appendArmorDescription(StringBuilder sb) {
     if (armor != null) {
       sb.append(" wearing ").append(armor);
     }
+  }
+
+  private void appendWeaponDescription(StringBuilder sb) {
     if (weapon != null) {
       sb.append(" and wielding a ").append(weapon);
     }
-    sb.append('.');
-    return sb.toString();
   }
 
   /** The builder class. */

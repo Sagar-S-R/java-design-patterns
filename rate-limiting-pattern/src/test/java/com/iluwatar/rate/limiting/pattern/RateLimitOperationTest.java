@@ -15,7 +15,6 @@ interface RateLimitOperationTest<T> {
     assertThrows(RateLimitException.class, operation::execute);
   }
 
-  // ✅ No @Test here, just a helper method
   default void shouldExecuteWhenUnderLimit(RateLimitOperation<T> operation) throws Exception {
     assertNotNull(operation.execute());
   }

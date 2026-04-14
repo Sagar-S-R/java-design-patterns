@@ -48,5 +48,12 @@ public class User {
   @Column(unique = true)
   private String email;
 
-  private String password;
+  private char[] password;
+
+  /** Secure password cleanup. Must be called when done with authentication. */
+  public void clearPassword() {
+    if (password != null) {
+      java.util.Arrays.fill(password, '\0');
+    }
+  }
 }

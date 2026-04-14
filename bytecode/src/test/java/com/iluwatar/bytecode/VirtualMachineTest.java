@@ -32,76 +32,83 @@ import org.junit.jupiter.api.Test;
 
 /** Test for {@link VirtualMachine} */
 class VirtualMachineTest {
+  private static final int BYTECODE_LENGTH_5 = 5;
+  private static final int BYTECODE_LENGTH_8 = 8;
+  private static final int WIZARD_INDEX_0 = 0;
+  private static final int HEALTH_AMOUNT = 50;
+  private static final int AGILITY_AMOUNT = 50;
+  private static final int WISDOM_AMOUNT = 50;
+  private static final int LITERAL_VALUE = 10;
 
   @Test
   void testLiteral() {
     var bytecode = new int[2];
     bytecode[0] = LITERAL.getIntValue();
-    bytecode[1] = 10;
+    bytecode[1] = LITERAL_VALUE;
 
     var vm = new VirtualMachine();
     vm.execute(bytecode);
 
     assertEquals(1, vm.getStack().size());
-    assertEquals(Integer.valueOf(10), vm.getStack().pop());
+    assertEquals(Integer.valueOf(LITERAL_VALUE), vm.getStack().pop());
   }
 
   @Test
   void testSetHealth() {
-    var wizardNumber = 0;
-    var bytecode = new int[5];
+    var wizardNumber = WIZARD_INDEX_0;
+    var bytecode = new int[BYTECODE_LENGTH_5];
     bytecode[0] = LITERAL.getIntValue();
     bytecode[1] = wizardNumber;
     bytecode[2] = LITERAL.getIntValue();
-    bytecode[3] = 50; // health amount
+    bytecode[3] = HEALTH_AMOUNT;
     bytecode[4] = SET_HEALTH.getIntValue();
 
     var vm = new VirtualMachine();
     vm.execute(bytecode);
 
-    assertEquals(50, vm.getWizards()[wizardNumber].getHealth());
+    assertEquals(HEALTH_AMOUNT, vm.getWizards()[wizardNumber].getHealth());
   }
 
   @Test
   void testSetAgility() {
-    var wizardNumber = 0;
-    var bytecode = new int[5];
+    var wizardNumber = WIZARD_INDEX_0;
+    var bytecode = new int[BYTECODE_LENGTH_5];
     bytecode[0] = LITERAL.getIntValue();
     bytecode[1] = wizardNumber;
     bytecode[2] = LITERAL.getIntValue();
-    bytecode[3] = 50; // agility amount
+    bytecode[3] = AGILITY_AMOUNT;
     bytecode[4] = SET_AGILITY.getIntValue();
 
     var vm = new VirtualMachine();
     vm.execute(bytecode);
 
-    assertEquals(50, vm.getWizards()[wizardNumber].getAgility());
+    assertEquals(AGILITY_AMOUNT, vm.getWizards()[wizardNumber].getAgility());
   }
 
   @Test
   void testSetWisdom() {
-    var wizardNumber = 0;
-    var bytecode = new int[5];
+    var wizardNumber = WIZARD_INDEX_0;
+    var bytecode = new int[BYTECODE_LENGTH_5];
     bytecode[0] = LITERAL.getIntValue();
     bytecode[1] = wizardNumber;
     bytecode[2] = LITERAL.getIntValue();
-    bytecode[3] = 50; // wisdom amount
+    bytecode[3] = WISDOM_AMOUNT;
     bytecode[4] = SET_WISDOM.getIntValue();
 
     var vm = new VirtualMachine();
     vm.execute(bytecode);
 
-    assertEquals(50, vm.getWizards()[wizardNumber].getWisdom());
+    assertEquals(WISDOM_AMOUNT, vm.getWizards()[wizardNumber].getWisdom());
   }
 
   @Test
   void testGetHealth() {
-    var wizardNumber = 0;
-    var bytecode = new int[8];
+    var wizardNumber = WIZARD_INDEX_0;
+    var bytecode = new int[BYTECODE_LENGTH_8];
     bytecode[0] = LITERAL.getIntValue();
     bytecode[1] = wizardNumber;
     bytecode[2] = LITERAL.getIntValue();
-    bytecode[3] = 50; // health amount
+    bytecode[3] = HEALTH_AMOUNT;
     bytecode[4] = SET_HEALTH.getIntValue();
     bytecode[5] = LITERAL.getIntValue();
     bytecode[6] = wizardNumber;
@@ -110,7 +117,7 @@ class VirtualMachineTest {
     var vm = new VirtualMachine();
     vm.execute(bytecode);
 
-    assertEquals(Integer.valueOf(50), vm.getStack().pop());
+    assertEquals(Integer.valueOf(HEALTH_AMOUNT), vm.getStack().pop());
   }
 
   @Test

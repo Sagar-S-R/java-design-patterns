@@ -77,7 +77,11 @@ public class CountryTest {
     try {
       ObjectInputStream objectInputStream =
           new ObjectInputStream(new FileInputStream("output.txt"));
-      Country country = (Country) objectInputStream.readObject();
+      Object obj = objectInputStream.readObject();
+      if (!(obj instanceof Country)) {
+        throw new ClassCastException("Deserialized object is not a Country instance");
+      }
+      Country country = (Country) obj;
       objectInputStream.close();
       System.out.println(country);
 

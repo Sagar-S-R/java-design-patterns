@@ -28,12 +28,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-/** ignup model. */
+/** Signup model. */
 @Component
 @Data
 @NoArgsConstructor
 public class SignupModel {
   private String name;
   private String email;
-  private String password;
+  private char[] password;
+
+  /** Secure password cleanup. Must be called when done with authentication. */
+  public void clearPassword() {
+    if (password != null) {
+      java.util.Arrays.fill(password, '\0');
+    }
+  }
 }

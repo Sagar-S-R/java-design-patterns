@@ -108,7 +108,7 @@ public final class App {
       String[] operations = {
         "GetObject", "PutObject", "Query", "Scan", "PutItem", "Invoke", "ListFunctions"
       };
-      SecureRandom random = new SecureRandom(); // ✅ Safe & compliant for SonarCloud
+      SecureRandom random = new SecureRandom();
 
       while (running.get() && !Thread.currentThread().isInterrupted()) {
         try {

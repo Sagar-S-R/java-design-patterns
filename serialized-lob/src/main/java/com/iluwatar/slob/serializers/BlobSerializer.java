@@ -76,7 +76,12 @@ public class BlobSerializer extends LobSerializer {
     InputStream bis = (InputStream) toDeserialize;
     Forest forest;
     try (ObjectInput in = new ObjectInputStream(bis)) {
-      forest = (Forest) in.readObject();
+      Object obj = in.readObject();
+      if (!(obj instanceof Forest)) {
+        throw new ClassCastException("Deserialized object is not a Forest instance. "
+            + "Expected Forest but got " + (obj != null ? obj.getClass().getName() : "null"));
+      }
+      forest = (Forest) obj;
     }
     return forest;
   }
