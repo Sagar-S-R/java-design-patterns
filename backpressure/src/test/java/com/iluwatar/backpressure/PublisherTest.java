@@ -42,9 +42,9 @@ public class PublisherTest {
         .expectSubscription()
         .expectNoEvent(Duration.ofMillis(200))
         .expectNext(1)
-        .expectNoEvent(Duration.ofSeconds(200))
+        .expectNoEvent(Duration.ofMillis(200))
         .expectNext(2)
-        .expectNoEvent(Duration.ofSeconds(200))
+        .expectNoEvent(Duration.ofMillis(200))
         .expectNext(3)
         .verifyComplete();
   }
