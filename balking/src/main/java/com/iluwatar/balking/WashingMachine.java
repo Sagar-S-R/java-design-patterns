@@ -78,6 +78,7 @@ public class WashingMachine {
   /** Method is responsible for ending the washing by changing machine state. */
   public synchronized void endOfWashing() {
     washingMachineState = WashingMachineState.ENABLED;
-    LOGGER.info("{}: Washing completed.", Thread.currentThread().getId());
+    // ✅ Fixed: Use threadId() instead of deprecated getId() (Java 21+)
+    LOGGER.info("{}: Washing completed.", Thread.currentThread().threadId());
   }
 }

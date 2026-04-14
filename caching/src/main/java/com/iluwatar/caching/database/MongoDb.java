@@ -44,10 +44,24 @@ import org.bson.Document;
 @Slf4j
 public class MongoDb implements DbManager {
   private static final String DATABASE_NAME = "admin";
-  private static final String MONGO_USER = "root";
-  private static final String MONGO_PASSWORD = "rootpassword";
+  private static final String MONGO_USER = getEnvOrDefault("MONGO_USER", "root");
+  private static final String MONGO_PASSWORD = getEnvOrDefault("MONGO_PASSWORD", "rootpassword");
   private MongoClient client;
   private MongoDatabase db;
+
+  /**
+   * Helper method to get environment variable with fallback. In production, MONGO_PASSWORD MUST be
+   * set as environment variable.
+   */
+  private static String getEnvOrDefault(String key, String defaultValue) {
+    String value = System.getenv(key);
+    if (value == null || value.isEmpty()) {
+      LOGGER.warn(
+          "Environment variable {} not set. Using default (NOT RECOMMENDED FOR PRODUCTION)", key);
+      return defaultValue;
+    }
+    return value;
+  }
 
   void setDb(MongoDatabase db) {
     this.db = db;

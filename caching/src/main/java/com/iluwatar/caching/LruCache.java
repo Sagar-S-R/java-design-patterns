@@ -151,7 +151,7 @@ public class LruCache {
       setHead(old);
     } else {
       var newNode = new Node(userId, userAccount);
-      if (cache.size() >= capacity) {
+      if (cache.size() >= capacity && end != null) {
         LOGGER.info("# Cache is FULL! Removing {} from cache...", end.userId);
         cache.remove(end.userId); // remove LRU data from cache.
         remove(end);
