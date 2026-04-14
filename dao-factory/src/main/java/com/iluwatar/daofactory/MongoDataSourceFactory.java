@@ -36,16 +36,22 @@ public class MongoDataSourceFactory extends DAOFactory {
   private static final String CONN_STR = "mongodb://localhost:27017/";
   private static final String DB_NAME = "dao_factory";
   private static final String COLLECTION_NAME = "customer";
+  private static final MongoClient MONGO_CLIENT = createMongoClient();
+
+  private static MongoClient createMongoClient() {
+    MongoClient mongoClient = MongoClients.create(CONN_STR);
+    Runtime.getRuntime().addShutdownHook(new Thread(mongoClient::close));
+    return mongoClient;
+  }
 
   @Override
   public CustomerDAO<ObjectId> createCustomerDAO() {
     try {
-      MongoClient mongoClient = MongoClients.create(CONN_STR);
-      MongoDatabase database = mongoClient.getDatabase(DB_NAME);
+      MongoDatabase database = MONGO_CLIENT.getDatabase(DB_NAME);
       MongoCollection<Document> customerCollection = database.getCollection(COLLECTION_NAME);
       return new MongoCustomerDAO(customerCollection);
-    } catch (CustomException e) {
-      throw new CustomException("Error: " + e);
+    } catch (RuntimeException e) {
+      throw new CustomException("Error creating Mongo customer DAO", e);
     }
   }
 }
