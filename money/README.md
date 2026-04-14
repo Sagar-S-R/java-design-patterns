@@ -102,7 +102,7 @@ By encapsulating all money-related logic in a single class, we reduce the risk o
 * When precise handling of currency amounts is required to avoid floating-point inaccuracies
 * When domain-driven design principles and strong typing are desired
 
-## Real-World Applications of Monad Pattern in Java
+## Real-World Applications of Money Pattern in Java
 
 * JSR 354 (Java Money and Currency) library in Java
 * Custom domain models in e-commerce and accounting systems
