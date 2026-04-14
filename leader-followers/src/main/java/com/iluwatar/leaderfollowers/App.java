@@ -48,12 +48,16 @@ public class App {
       workers.forEach(exec::submit);
       Thread.sleep(1000);
       addTasks(taskSet);
+      exec.shutdown();
       boolean terminated = exec.awaitTermination(2, TimeUnit.SECONDS);
       if (!terminated) {
         LOGGER.warn("Executor did not terminate in the given time.");
+        exec.shutdownNow();
       }
-    } finally {
+    } catch (InterruptedException e) {
       exec.shutdownNow();
+      Thread.currentThread().interrupt();
+      throw e;
     }
   }
 
