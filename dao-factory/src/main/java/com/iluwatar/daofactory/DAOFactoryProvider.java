@@ -44,7 +44,7 @@ public class DAOFactoryProvider {
   private DAOFactoryProvider() {}
 
   /**
-   * Returns a concrete {@link DAOFactory} intance based on the specified data source type.
+   * Returns a concrete {@link DAOFactory} instance based on the specified data source type.
    *
    * @param dataSourceType The type of data source for which a factory is needed. Supported values:
    *     {@code H2}, {@code Mongo}, {@code FlatFile}
